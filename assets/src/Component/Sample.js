@@ -1,6 +1,5 @@
 import React from 'react'
 import {View,Text,StyleSheet} from 'react-native'
-import { style } from 'd3'
 import RingChart from './RingChart'
 
 

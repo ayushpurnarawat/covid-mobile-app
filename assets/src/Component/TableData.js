@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity} from 'react-native'
+import {View,StyleSheet,TouchableOpacity} from 'react-native'
 import { ScrollView, FlatList } from 'react-native-gesture-handler'
 import IndiaResponse from '../API/IndiaResponse'
 import TableHeader from '../Component/TableHeader'
@@ -19,7 +19,7 @@ const TableData =({navigation})=>{
             renderItem={({item})=>{
                     if(item.state!=='Total')
                     return (
-                        <TouchableOpacity onPress={()=> navigation.navigate("State",{id:item.state})}>
+                        <TouchableOpacity onPress={()=> navigation.navigate("StateHomeScreen",{id:item.state})}>
                     <RowData 
                         StateName={item.state} 
                         ConfirmedCases={item.confirmed}
@@ -38,7 +38,7 @@ const TableData =({navigation})=>{
 }
 const Styles= StyleSheet.create({
     ViewStyle:{
-    
+        marginTop:50
     },
 
 })

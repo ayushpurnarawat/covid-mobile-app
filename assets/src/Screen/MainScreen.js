@@ -1,11 +1,9 @@
-import React, { useEffect, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import {View,Text,ScrollView,StyleSheet,Dimensions, Button} from 'react-native'
-import TableHeader from '../Component/TableHeader'
-import TableData from '../Component/TableData'
+
 import SearchBar from '../Component/SearchBar'
 import RingChart from '../Component/RingChart'
-import { LinearGradient } from 'react-native-svg'
-import Sample from '../Component/Sample'
+
 import {withNavigation}  from 'react-navigation'
 import ButtonJs from '../Component/Button'
 
@@ -17,7 +15,6 @@ const MainScreen = ({navigation})=>{
     // console.log(result.cases_time_series[0].dailyconfirmed)
     const height = Dimensions.get("window").height
     const width = Dimensions.get("window").width
-    console.log(height,"HEight")
     var date = new Date()
     var month = date.getMonth()
     return(
@@ -47,10 +44,12 @@ const MainScreen = ({navigation})=>{
             <TotalData/>
         </Suspense>
             {/* <TableData/>     */}
-         {/* <ButtonJs click={()=>navigation.navigate('DataTable')}/> */}
-            <Button 
+         <ButtonJs click={()=>navigation.navigate('DataTable',{DisplayDataFor:"India",ApiLink:"https://api.covid19india.org/data.json"})} title={"Statistics"}/>
+         <ButtonJs click={()=>navigation.navigate('IndiaScreen')} title={"StateWise"}/>
+         <ButtonJs click={()=>navigation.navigate("GlobalHomeScreen",{FetchData:false})} title={"Global"}/>
+            {/* <Button 
             title="StateWise"
-            onPress={()=>navigation.navigate('DataTable')}/>
+            onPress={()=>navigation.navigate('DataTable')}/> */}
         </View> 
             
             
@@ -69,7 +68,7 @@ const Styles = StyleSheet.create({
     },
     SecondViewStyle:{
         backgroundColor:'aliceblue',
-        
+        height:height-(height/3)+25,
         marginTop:-25,
         borderTopEndRadius:45,
         borderTopLeftRadius:45

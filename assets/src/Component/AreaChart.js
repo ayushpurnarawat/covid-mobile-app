@@ -1,26 +1,43 @@
-import React, { useState, useEffect } from 'react'
-import {View,Text,Dimensions, DatePickerIOSBase} from 'react-native'
+import React from 'react'
+import {View,Text} from 'react-native'
 import {LineChart } from 'react-native-chart-kit'
-import IndiaResponse from '../API/IndiaResponse'
 import useSwr from 'swr'
 import * as d3 from 'd3'
-import { rgb } from 'd3'
 import ColorPicker from '../Functions/ColorPicker'
 var TimeConv = d3.timeParse('%d %B %Y')
+var TimeConvForState = d3.timeParse("%d-%b-%y")
+
 async function fetcher(url) {
     const res = await fetch(url);
     const json = await res.json();
     return json;
   }
-const AreaChartExample=({title,from,ChartHeight,ChartWidth})=>{
-    console.log(title,"???????????")
+const AreaChartExample=(
+                {title,
+                  from,
+                  ChartHeight,
+                  ChartWidth,
+                  DisplayDataFor,
+                  id,ApiLink,
+                  StateCode,
+                  CurrentDate,
+                  PastSavenDaysDate,
+                  FetchData
+                })=>{
+      console.log(id,"ANkit")
     // const time =TimeConv(result.cases_time_series[0].date+"2020")
-    const {data:abc} = useSwr("https://api.covid19india.org/data.json",fetcher)
-    if(abc){
+    var wait =false
+    const {data:GlobaFetch} = useSwr(FetchData?null:`${ApiLink}?from=${PastSavenDaysDate}&to=${CurrentDate}`,fetcher)
+    const {data:abc} = useSwr(FetchData?"https://api.covid19india.org/data.json":null,fetcher)
+    
+    if(abc || GlobaFetch){
+    var wait =true
     var labels =[]
     var data = []
     var count = 0
     const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+    
+    if(DisplayDataFor==='India')
     for(var key in abc.cases_time_series)
     {
         var time =TimeConv(abc.cases_time_series[key].date+"2020")
@@ -30,7 +47,6 @@ const AreaChartExample=({title,from,ChartHeight,ChartWidth})=>{
     
         
         if(title==='Confirmed'){
-            console.log("enter----",ChartWidth)
 
         data[count]=abc.cases_time_series[key].dailyconfirmed
         labels[count] = date
@@ -63,10 +79,137 @@ const AreaChartExample=({title,from,ChartHeight,ChartWidth})=>{
         
 
     }
+    else if((DisplayDataFor==='Global')&& GlobaFetch){
+      console.log("else")
+      var date =10
+      var count=0
+      for(var key in GlobaFetch)
+      {
+        if(title==='Confirmed'){
+
+          data[count]=GlobaFetch[key].TotalConfirmed
+          labels[count] = date
+          var chartColor = title
+           chartColor= ColorPicker(title,chartColor)
+          }
+          if(title==='Recovered')
+          {
+              data[count]=GlobaFetch[key].TotalRecovered
+              labels[count] = date
+              var chartColor = title
+            chartColor= ColorPicker(title,chartColor)
+          }
+          if(title==='Active')
+          {
+              data[count]=(GlobaFetch[key].TotalConfirmed)-(GlobaFetch[key].TotalRecovered)-(GlobaFetch[key].TotalDeaths)
+              labels[count] = date
+              var chartColor = title
+            chartColor= ColorPicker(title,chartColor)
+          }
+          if(title==='Deaths')
+          {
+              data[count]=GlobaFetch[key].TotalDeaths
+              labels[count] = date
+              var chartColor = title
+            chartColor= ColorPicker(title,chartColor)
+          }
+          date++
+          count++
+      }
+    }
+    else if((DisplayDataFor==="SingleCountry")&&GlobaFetch)
+    {
+      var date =10
+      var count=0
+      for(var key in GlobaFetch)
+      {
+        console.log(key,"KEYSSS")
+        // if(title==='Confirmed'){
+
+        //   data[count]=GlobaFetch[key].TotalConfirmed
+        //   labels[count] = date
+        //   var chartColor = title
+        //    chartColor= ColorPicker(title,chartColor)
+        //   }
+        //   if(title==='Recovered')
+        //   {
+        //       data[count]=GlobaFetch[key].TotalRecovered
+        //       labels[count] = date
+        //       var chartColor = title
+        //     chartColor= ColorPicker(title,chartColor)
+        //   }
+        //   if(title==='Active')
+        //   {
+        //       data[count]=(GlobaFetch[key].TotalConfirmed)-(GlobaFetch[key].TotalRecovered)-(GlobaFetch[key].TotalDeaths)
+        //       labels[count] = date
+        //       var chartColor = title
+        //     chartColor= ColorPicker(title,chartColor)
+        //   }
+        //   if(title==='Deaths')
+        //   {
+        //       data[count]=GlobaFetch[key].TotalDeaths
+        //       labels[count] = date
+        //       var chartColor = title
+        //     chartColor= ColorPicker(title,chartColor)
+        //   }
+        //   date++
+        //   count++
+      }   
+    }
+  
 }
+
+else if((DisplayDataFor==='State') && abc)
+{
+  var labels =[]
+  var data = []
+    var count=0
+    for(var key in abc.states_daily)
+    {
+      var time = TimeConvForState(abc.states_daily[key]['date'])
+      var mon = time.getMonth()
+      var date = time.getDate()
+
+      if(mon===from){
     
-
-
+        
+        if((title==='Confirmed')&&(abc.states_daily[key]["status"]==='Confirmed'))
+        {
+            data[count]=parseInt(abc.states_daily[key]["rj"])
+            labels[count]=date
+            
+        var chartColor = title
+         chartColor= ColorPicker(title,chartColor)
+        }
+        // if(title==='Recovered')
+        // {
+        //     data[count]=abc.cases_time_series[key].dailyrecovered
+        //     labels[count] = date
+        //     var chartColor = title
+        //   chartColor= ColorPicker(title,chartColor)
+        // }
+        // if(title==='Active')
+        // {
+        //     data[count]=(abc.cases_time_series[key].dailyconfirmed)-(abc.cases_time_series[key].dailyrecovered)-(abc.cases_time_series[key].dailydeceased)
+        //     labels[count] = date
+        //     var chartColor = title
+        //   chartColor= ColorPicker(title,chartColor)
+        // }
+        // if(title==='Deaths')
+        // {
+        //     data[count]=abc.cases_time_series[key].dailydeceased
+        //     labels[count] = date
+        //     var chartColor = title
+        //   chartColor= ColorPicker(title,chartColor)
+        // }
+        count++
+        }
+    }
+}
+// setTimeout(()=>{
+//   if(abc)
+//   wait=true
+// },1000000)
 
 const chartConfig = {
     backgroundGradientFrom: "#1E2923",
@@ -86,7 +229,7 @@ const chartConfig = {
         stroke: "red"
       } // optional
   };
-    if(!abc)
+    if(!wait)
     return <View><Text>Hellogjgj</Text></View>
     return(
         <View>

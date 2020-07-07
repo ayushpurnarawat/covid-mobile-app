@@ -2,11 +2,68 @@ import React from 'react'
 import {View,Text,StyleSheet} from 'react-native'
 import NumberChange from '../Functions/NumberChange'
 import RingChart from './RingChart'
-import { AreaChart } from 'react-native-svg-charts'
 import AreaChartExample from './AreaChart'
-const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id})=>{
+import * as d3 from 'd3'
+import {withNavigation} from 'react-navigation'
+const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,ApiLink,navigation,FetchData})=>{
+    console.log(id,"SingleCountry",DisplayDataFor)
+    var D3TIME = d3.timeFormat("%Y-%m-%d")
+    var dates = new Date()
+    var OneDayBefore = new Date(dates.getTime()-(1*24*60*60*1000))
+    var CurrentDate = D3TIME(OneDayBefore)+"T00:00:00.000Z"
+    var PastDate = new Date(dates.getTime()-(7*24*60*60*1000))
+    var PastSavenDaysDate = D3TIME(PastDate)+"T00:00:00.000Z"
+    console.log(PastSavenDaysDate,"[JAIN]",CurrentDate)
+
     var date = new Date()
     var month = date.getMonth()
+    var AreaChart = null
+    if(DisplayDataFor==='India')
+    {
+        AreaChart=<AreaChartExample title={title} from={month} 
+                backgroundGradientFrom={"rgb(180,74,42,.5)"}
+                ChartWidth={150}
+                ChartHeight={80}
+                DisplayDataFor={DisplayDataFor}
+                id={id}
+                StateCode={StateCode}
+                ApiLink="https://api.covid19india.org/data.json"
+                CurrentDate={CurrentDate}
+                PastSavenDaysDate={PastSavenDaysDate}
+                FetchData={FetchData}
+                />
+    }
+    else if(DisplayDataFor==='Global')
+    {
+        AreaChart=<AreaChartExample title={title} from={month} 
+                backgroundGradientFrom={"rgb(180,74,42,.5)"}
+                ChartWidth={150}
+                ChartHeight={80}
+                DisplayDataFor={DisplayDataFor}
+                id={id}
+                StateCode={StateCode}
+                ApiLink="https://api.covid19api.com/world"
+                CurrentDate={CurrentDate}
+                PastSavenDaysDate={PastSavenDaysDate}
+                FetchData={FetchData}
+                />
+    }
+    else if(DisplayDataFor==='SingleCountry')
+    {
+        AreaChart=<AreaChartExample title={title} from={month} 
+                backgroundGradientFrom={"rgb(180,74,42,.5)"}
+                ChartWidth={150}
+                ChartHeight={80}
+                DisplayDataFor={DisplayDataFor}
+                id={id}
+                StateCode={StateCode}
+                ApiLink="https://api.covid19api.com/total/country/"
+                CurrentDate={CurrentDate}
+                PastSavenDaysDate={PastSavenDaysDate}
+                FetchData={FetchData}
+                />
+    }
+    // 
     return(
         <View style={Styles.ViewStyle} >
             <View style={Styles.ViewStyleTwo}>            
@@ -23,16 +80,20 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id})=>{
                     </Text>
                 
                 </View>
-                <AreaChartExample title={title} from={month} 
+                {/* <AreaChartExample title={title} from={month} 
                 backgroundGradientFrom={"rgb(180,74,42,.5)"}
                 ChartWidth={150}
                 ChartHeight={80}
-                />
-                
+                DisplayDataFor={DisplayDataFor}
+                id={id}
+                StateCode={StateCode}
+                ApiLink={ApiLink}
+                /> */}
+                {AreaChart}
             </View>
             <View style={{marginLeft:30,marginTop:3}}>
                         
-                        <RingChart Data={Data} title={title} DisplayDataFor={DisplayDataFor} id={id}/>
+                        <RingChart Data={Data} title={title} DisplayDataFor={DisplayDataFor} id={id} ApiLink={ApiLink}/>
                 </View>
         </View>
     )
@@ -69,4 +130,4 @@ const Styles= StyleSheet.create({
         color:"white"
     }
 }) 
-export default DisplayData
+export default withNavigation(DisplayData)

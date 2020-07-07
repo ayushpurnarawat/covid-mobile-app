@@ -1,13 +1,15 @@
 import React from 'react'
-import {View,Text,Button,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
 const ScreenWidth = Dimensions.get('window').width
-const ButtonJs = ({click})=>{
-    console.log("BUttton","///////////////////////")
+const ScreenHeight = Dimensions.get("screen").height
+const customheight = ScreenHeight/3
+const customheight2 = ScreenHeight - (customheight)
+const ButtonJs = ({click,title})=>{
     return(
-        <View>
+        <View  >
             <TouchableOpacity style={Styles.ButtonStyle} onPress={click}>
             <Text style={Styles.TextStyle}>
-                Statewise
+                {title}
             </Text>
             </TouchableOpacity>
             

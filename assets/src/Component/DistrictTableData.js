@@ -1,7 +1,6 @@
 import React from "react";
 import {View,Text,FlatList} from 'react-native'
 import TableHeader from '../Component/TableHeader'
-import StateResponse from '../API/StateResponse'
 import RowData from '../Component/RowData'
 import useSwr from 'swr'
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,7 +17,7 @@ const DistrictTableData = ({id})=>{
     return (<View><Text>Loading</Text></View>)
     return(
         <ScrollView horizontal={true}>
-        <View>
+        <View style={{marginTop:50}}>
             <TableHeader name={"Districts"}/>
             <FlatList
             data={Object.keys(result[id].districtData)}

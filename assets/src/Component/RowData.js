@@ -60,7 +60,7 @@ const Styles= StyleSheet.create({
         marginTop:4,
 
         width:90,
-        backgroundColor:'rgb(27,27,24)',
+        backgroundColor:'transparent',
         color:'white',
         fontWeight:'bold',
         borderRadius:5,
@@ -72,7 +72,7 @@ const Styles= StyleSheet.create({
         marginTop:4,
 
         width:90,
-        backgroundColor:'rgb(27,27,24)',
+        backgroundColor:'transparent',
         color:'white',
         
         fontWeight:'bold',

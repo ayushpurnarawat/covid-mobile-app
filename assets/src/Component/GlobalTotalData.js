@@ -1,10 +1,10 @@
 import React from 'react'
-import {View,FlatList,Text,StyleSheet} from 'react-native'
-import IndiaResponse from '../API/IndiaResponse'
+import {View,FlatList,Text,StyleSheet,TouchableOpacity} from 'react-native'
+import GlobalResponse from '../API/GlobalResponse'
 import DisplayData from './DisplayData'
 import Colorpicker from '../Functions/ColorPicker'
-const TotalData = ()=>{
-    const result = IndiaResponse()
+const GlobalTotalData = ()=>{
+    const result = GlobalResponse()
     var size = 0
     for(var key in result.tested)
     {
@@ -15,16 +15,16 @@ const TotalData = ()=>{
    
     TotalData={
         Confirmed:{
-            data:result.statewise[0].confirmed
+            data:result["Global"].TotalConfirmed
         },
         Active:{
-            data:result.statewise[0].active
+            data:result["Global"].TotalConfirmed-result["Global"].TotalRecovered-result["Global"].TotalDeaths
         },
         Recovered:{
-            data:result.statewise[0].recovered
+            data:result["Global"].TotalRecovered
         },
         Deaths:{
-            data:result.statewise[0].deaths
+            data:result["Global"].TotalDeaths
         }
     }
         }
@@ -38,14 +38,17 @@ const TotalData = ()=>{
             
             renderItem={({item,index})=>{
             return (
+                                 
                     <DisplayData 
                     Data={TotalData[item].data} 
                     title={item} 
                     color={Colorpicker(item)}
-                    DisplayDataFor="India"
-                    ApiLink ="https://api.covid19india.org/data.json"
-                    FetchData={true}
+                    DisplayDataFor="Global"
+                    ApiLink ="https://api.covid19api.com/summary"
+                    FetchData={false}
                     />
+                    
+
                 )
             }}
             showsVerticalScrollIndicator={false}
@@ -63,4 +66,4 @@ const Styles =  StyleSheet.create({
         height:50
     }
 })
-export default TotalData
+export default GlobalTotalData
