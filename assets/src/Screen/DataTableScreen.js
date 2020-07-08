@@ -17,6 +17,7 @@ const DataTableScreen = ({navigation,id})=>{
     var PastSavenDaysDate = D3TIME(PastDate)+"T00:00:00.000Z"
     // console.log("PastSavenDate",SavenDays,"Currnet==",CurrentDate)
     var FetchData = navigation.getParam("FetchData")
+    console.log(FetchData,"fatchy")
     var DisplayDataFor = navigation.getParam("DisplayDataFor")
     var ApiLink = navigation.getParam("ApiLink")
     var id= navigation.getParam("id")

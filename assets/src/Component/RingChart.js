@@ -9,6 +9,7 @@ async function fetcher(url) {
     return json;
   }
 const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
+    console.log(ApiLink,"=",DisplayDataFor,"=",id,"[RingChart.js]")
     var per = []
     var showPersentage =null
     const {data:abc} = useSwr(ApiLink,fetcher)
@@ -106,6 +107,41 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
                             {parseFloat(per[0]*100).toFixed(0)+"%"}
                             </Text>)
                 }
+        }
+        else if((DisplayDataFor==='SingleCountry'))
+        {
+            for(var key in abc["Countries"])
+            {
+                if(id===abc["Countries"][key].Country)
+                {
+                    if(title==="Active")
+                    {
+                        
+                        per[0]=(abc["Countries"][key].TotalConfirmed -abc["Countries"][key].TotalRecovered-abc["Countries"][key].TotalDeaths)/(abc["Countries"][key].TotalConfirmed)
+                        showPersentage = (<Text 
+                                style={{color:"gray",fontWeight:'bold',marginTop:48,marginLeft:28}}>
+                                    {parseFloat(per[0]*100).toFixed(0)+"%"}
+                                    </Text>)
+                    
+                    }
+                    else if(title==="Recovered")
+                        {
+                            per[0]=(abc["Countries"][key].TotalRecovered)/(abc["Countries"][key].TotalConfirmed)
+                            showPersentage = (<Text 
+                                style={{color:"gray",fontWeight:'bold',marginTop:48,marginLeft:28}}>
+                                    {parseFloat(per[0]*100).toFixed(0)+"%"}
+                                    </Text>)
+                        }
+                    else if(title==='Deaths')
+                    {
+                        per[0]=(abc["Countries"][key].TotalDeaths)/(abc["Countries"][key].TotalConfirmed)
+                        showPersentage = (<Text 
+                            style={{color:"gray",fontWeight:'bold',marginTop:48,marginLeft:28}}>
+                                {parseFloat(per[0]*100).toFixed(0)+"%"}
+                                </Text>)
+                    }
+                }
+            }
         }
     }
     const dataset = {

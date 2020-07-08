@@ -8,6 +8,7 @@ import {withNavigation}  from 'react-navigation'
 import ButtonJs from '../Component/Button'
 import GlobalResponse from '../API/GlobalResponse'
 import GlobalTotalData from '../Component/GlobalTotalData'
+import StatisticsIcon from '../Icons/StatisticsIcon'
 
 const TotalData = React.lazy(()=>import("../Component/TotalData"))
 const AreaChartExample =  React.lazy(()=>import("../Component/AreaChart"))
@@ -25,10 +26,15 @@ const GlobalHomeScreen = ({navigation})=>{
         <ScrollView showsVerticalScrollIndicator={false}>
       <View >      
         <View style={Styles.FirstViewStyle}>
-            
-
+         <View style={{flexDirection:'column',marginTop:35}}>   
+         <View style={{marginRight:20}}>
+        <StatisticsIcon 
+            color="white" 
+            onPress={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world"})}
+            />
+        </View>
         <SearchBar/>
-        
+        </View>
         </View>   
         <View style={Styles.SecondViewStyle}>
         
@@ -36,7 +42,7 @@ const GlobalHomeScreen = ({navigation})=>{
            
         </View> 
             
-        <ButtonJs click={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world"})} title={"Statistics"}/>
+        {/* <ButtonJs click={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world"})} title={"Statistics"}/> */}
         <ButtonJs click={()=>navigation.navigate('GlobalScreen')} title={"CountryWise"}/>
 
             {/* <RingChart  /> */}

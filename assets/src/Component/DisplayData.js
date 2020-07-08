@@ -4,6 +4,7 @@ import NumberChange from '../Functions/NumberChange'
 import RingChart from './RingChart'
 import AreaChartExample from './AreaChart'
 import * as d3 from 'd3'
+import AreaChartSingleCountry from './AreaChartSingleCountry'
 import {withNavigation} from 'react-navigation'
 const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,ApiLink,navigation,FetchData})=>{
     console.log(id,"SingleCountry",DisplayDataFor)
@@ -50,12 +51,13 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
     }
     else if(DisplayDataFor==='SingleCountry')
     {
-        AreaChart=<AreaChartExample title={title} from={month} 
+        AreaChart=<AreaChartSingleCountry title={title} from={month} 
                 backgroundGradientFrom={"rgb(180,74,42,.5)"}
                 ChartWidth={150}
                 ChartHeight={80}
                 DisplayDataFor={DisplayDataFor}
                 id={id}
+                from={7}
                 StateCode={StateCode}
                 ApiLink="https://api.covid19api.com/total/country/"
                 CurrentDate={CurrentDate}

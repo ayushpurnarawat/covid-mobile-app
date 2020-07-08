@@ -6,6 +6,7 @@ import ButtonJs from '../Component/Button'
 import StateTotalData from '../Component/StateTotalData'
 import SingleCountryTotalData from '../Component/SingleCountryTotalData'
 import ColorPicker from '../Functions/ColorPicker'
+import StatisticsIcon from '../Icons/StatisticsIcon'
 
 const height = Dimensions.get("screen").height
 const SingleCountry = ({navigation})=>{
@@ -20,15 +21,23 @@ const SingleCountry = ({navigation})=>{
         
         <ScrollView showsVerticalScrollIndicator={false}>
       <View >
-          <Text style={{color:ColorPicker("Deaths"),marginTop:70,fontWeight:'bold',fontSize:25}}>{id}</Text>      
+        <View style={{alignItems:'baseline',flexDirection:'row'}}>
+          <Text style={{color:ColorPicker("Deaths"),marginTop:70,fontWeight:'bold',fontSize:25}}>{id}</Text>  
+          <View style={{marginLeft:200}}>
+          <StatisticsIcon 
+            color={ColorPicker("deaths")}
+            onPress={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})}
+          /> 
+          </View>
+          </View>   
         <View style={{marginTop:100}}>
         <SingleCountryTotalData id={id}/>
 
         </View>
         <View style={Styles.SecondViewStyle}>
         
-         <ButtonJs click={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})} title={"Statistics"}/>
-         <ButtonJs click={()=>navigation.navigate('State',{id:id})} title={"DistrictWise"}/>
+         {/* <ButtonJs click={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})} title={"Statistics"}/> */}
+         {/* <ButtonJs click={()=>navigation.navigate('State',{id:id})} title={"DistrictWise"}/> */}
             
         </View> 
             

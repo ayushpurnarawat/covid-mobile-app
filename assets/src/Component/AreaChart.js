@@ -24,14 +24,14 @@ const AreaChartExample=(
                   PastSavenDaysDate,
                   FetchData
                 })=>{
-      console.log(id,"ANkit")
+      console.log(DisplayDataFor,"=",ApiLink,FetchData,"=",from,"=",CurrentDate,"=",PastSavenDaysDate,"jain")
     // const time =TimeConv(result.cases_time_series[0].date+"2020")
     var wait =false
     const {data:GlobaFetch} = useSwr(FetchData?null:`${ApiLink}?from=${PastSavenDaysDate}&to=${CurrentDate}`,fetcher)
     const {data:abc} = useSwr(FetchData?"https://api.covid19india.org/data.json":null,fetcher)
     
     if(abc || GlobaFetch){
-    var wait =true
+    wait=true
     var labels =[]
     var data = []
     var count = 0
@@ -79,7 +79,8 @@ const AreaChartExample=(
         
 
     }
-    else if((DisplayDataFor==='Global')&& GlobaFetch){
+    if((DisplayDataFor==='Global')&& GlobaFetch){
+      wait=true
       console.log("else")
       var date =10
       var count=0
@@ -117,49 +118,11 @@ const AreaChartExample=(
           count++
       }
     }
-    else if((DisplayDataFor==="SingleCountry")&&GlobaFetch)
-    {
-      var date =10
-      var count=0
-      for(var key in GlobaFetch)
-      {
-        console.log(key,"KEYSSS")
-        // if(title==='Confirmed'){
-
-        //   data[count]=GlobaFetch[key].TotalConfirmed
-        //   labels[count] = date
-        //   var chartColor = title
-        //    chartColor= ColorPicker(title,chartColor)
-        //   }
-        //   if(title==='Recovered')
-        //   {
-        //       data[count]=GlobaFetch[key].TotalRecovered
-        //       labels[count] = date
-        //       var chartColor = title
-        //     chartColor= ColorPicker(title,chartColor)
-        //   }
-        //   if(title==='Active')
-        //   {
-        //       data[count]=(GlobaFetch[key].TotalConfirmed)-(GlobaFetch[key].TotalRecovered)-(GlobaFetch[key].TotalDeaths)
-        //       labels[count] = date
-        //       var chartColor = title
-        //     chartColor= ColorPicker(title,chartColor)
-        //   }
-        //   if(title==='Deaths')
-        //   {
-        //       data[count]=GlobaFetch[key].TotalDeaths
-        //       labels[count] = date
-        //       var chartColor = title
-        //     chartColor= ColorPicker(title,chartColor)
-        //   }
-        //   date++
-        //   count++
-      }   
-    }
+    
   
 }
 
-else if((DisplayDataFor==='State') && abc)
+if((DisplayDataFor==='State') && abc)
 {
   var labels =[]
   var data = []

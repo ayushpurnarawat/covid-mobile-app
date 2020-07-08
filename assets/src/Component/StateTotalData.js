@@ -4,7 +4,9 @@ import IndiaResponse from '../API/IndiaResponse'
 import DisplayData from './DisplayData'
 import ColorPicker from '../Functions/ColorPicker'
 import {STATE_NAMES} from '../Screen/Constant'
-const StateTotalData = ({id})=>{
+import StatisticsIcon from '../Icons/StatisticsIcon'
+import {withNavigation} from 'react-navigation'
+const StateTotalData = ({id,navigation})=>{
     var StateCode 
     for(var key in STATE_NAMES)
     {
@@ -34,7 +36,9 @@ const StateTotalData = ({id})=>{
     return(
         <View style={{marginTop:100}}>
             <Text style={{color:ColorPicker("Deaths"),fontWeight:'bold',fontSize:25}}>{id}</Text>
-
+            <StatisticsIcon onPress={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})}
+            color={ColorPicker("deaths")}
+            />
             <FlatList 
             data={Object.keys(TotalData)}
             renderItem={({item})=>{
@@ -59,4 +63,4 @@ const StateTotalData = ({id})=>{
     )
 }
 
-export default StateTotalData
+export default withNavigation(StateTotalData)

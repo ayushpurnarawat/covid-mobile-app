@@ -24,7 +24,7 @@ const StateHomeScreen = ({navigation})=>{
             <StateTotalData id={id}/>
         </Suspense>
             {/* <TableData/>     */}
-         <ButtonJs click={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id})} title={"Statistics"}/>
+         {/* <ButtonJs click={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})} title={"Statistics"}/> */}
          <ButtonJs click={()=>navigation.navigate('State',{id:id})} title={"DistrictWise"}/>
             
         </View> 
