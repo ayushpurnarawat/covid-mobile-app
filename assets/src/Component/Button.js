@@ -20,7 +20,7 @@ const Styles = StyleSheet.create({
     ButtonStyle:{
         height:50,
         width:ScreenWidth-5,
-        backgroundColor:'rgb(111,108,170)',
+        backgroundColor:'rgb(24,26,31)',
         borderRadius:20,
         marginTop:5
     

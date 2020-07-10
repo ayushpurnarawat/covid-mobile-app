@@ -37,7 +37,7 @@ const StateTotalData = ({id,navigation})=>{
         <View style={{marginTop:100}}>
             <Text style={{color:ColorPicker("Deaths"),fontWeight:'bold',fontSize:25}}>{id}</Text>
             <StatisticsIcon onPress={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})}
-            color={ColorPicker("deaths")}
+            color={"white"}
             />
             <FlatList 
             data={Object.keys(TotalData)}

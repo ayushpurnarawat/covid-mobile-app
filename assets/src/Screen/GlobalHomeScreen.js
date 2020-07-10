@@ -3,47 +3,72 @@ import {View,Text,ScrollView,StyleSheet,Dimensions, Button} from 'react-native'
 
 import SearchBar from '../Component/SearchBar'
 import RingChart from '../Component/RingChart'
-
+import useSwr from 'swr'
 import {withNavigation}  from 'react-navigation'
 import ButtonJs from '../Component/Button'
 import GlobalResponse from '../API/GlobalResponse'
-import GlobalTotalData from '../Component/GlobalTotalData'
+import Spinner from 'react-native-loading-spinner-overlay'
+// import GlobalTotalData from '../Component/GlobalTotalData'
 import StatisticsIcon from '../Icons/StatisticsIcon'
-
+import BackButton from '../Component/BackButton'
+const GlobalTotalData =  React.lazy(()=>import("../Component/GlobalTotalData"))
 const TotalData = React.lazy(()=>import("../Component/TotalData"))
 const AreaChartExample =  React.lazy(()=>import("../Component/AreaChart"))
 const height = Dimensions.get("screen").height
+async function fetcher(url) {
+    const res = await fetch(url);
+    const json = await res.json();
+    return json;
+  }
 const GlobalHomeScreen = ({navigation})=>{
     var FetchData = navigation.getParam('FetchData')
-    console.log(FetchData,"[GlobalHomeScree]")
-    const result = GlobalResponse()
-    for(var key in result)
+    // const result = GlobalResponse()
+    const {data:result,error} = useSwr("https://api.covid19api.com/summary",fetcher)
+    if(error)
     {
-        console.log(result["Global"])
+        console.log(error,"[GlobalHomeScreen.js]")
     }
+    
+    if(result)
+    {
+        console.log(result,"Byeee")
+        if(result["success"]===false)
+        {
+            console.log("Jai",result["success"])
+            return (<View><Spinner visible={true} textContent="LimitOver.... " textStyle={{color:'white'}}/></View>)
+
+        }
+
+    }
+    if(!result)
+    return (<View><Text style={{color:'red'}}>WaitKr</Text></View>)
     return(
         
         <ScrollView showsVerticalScrollIndicator={false}>
-      <View >      
+      <View style={{height:height,backgroundColor:'rgb(24,26,31)'}}> 
+      <BackButton onPress={()=>navigation.goBack()}/>
+     
         <View style={Styles.FirstViewStyle}>
          <View style={{flexDirection:'column',marginTop:35}}>   
          <View style={{marginRight:20}}>
         <StatisticsIcon 
             color="white" 
-            onPress={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world"})}
+            onPress={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world",FetchData:false})}
             />
         </View>
         <SearchBar/>
+        <Text style={{fontWeight:'bold',fontSize:25,color:"white",alignSelf:'center'}}>Global</Text>
         </View>
         </View>   
         <View style={Styles.SecondViewStyle}>
-        
+        <Suspense fallback={<View><Text style={{color:'white'}}>Loading..</Text></View>}>
          <GlobalTotalData DisplayDataFor={"Global"} FetchData={FetchData}/>
-           
+         </Suspense>
+         <ButtonJs click={()=>navigation.navigate('GlobalScreen')} title={"CountryWise"}/>
+
         </View> 
             
         {/* <ButtonJs click={()=>navigation.navigate('DataTable',{DisplayDataFor:"Global",ApiLink:"https://api.covid19api.com/world"})} title={"Statistics"}/> */}
-        <ButtonJs click={()=>navigation.navigate('GlobalScreen')} title={"CountryWise"}/>
 
             {/* <RingChart  /> */}
         </View>
@@ -52,18 +77,19 @@ const GlobalHomeScreen = ({navigation})=>{
 }
 const Styles = StyleSheet.create({
     FirstViewStyle:{
-        backgroundColor:"rgb(111,108,170)",         //rgb(94,90,180)
-        height:height/3,
-        borderBottomStartRadius:15,
-        borderBottomEndRadius:15,
+                 //rgb(94,90,180) rgb(111,108,170)
+        // height:height/3,
+        // borderBottomStartRadius:15,
+        // borderBottomEndRadius:15,
+        marginTop:height/15
+
         
     },
     SecondViewStyle:{
-        backgroundColor:'aliceblue',
-        height:height-(height/3)-20,
-        marginTop:-25,
-        borderTopEndRadius:45,
-        borderTopLeftRadius:45
+        marginTop:10
+        
+        // borderTopEndRadius:45,
+        // borderTopLeftRadius:45
     }
     
 })

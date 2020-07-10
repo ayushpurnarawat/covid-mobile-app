@@ -1,7 +1,6 @@
 export default (color,ChartColor)=>{
     
         if(color==='Confirmed'){
-            console.log("------------------------------")
             if(ChartColor==='Confirmed')
             return 'rgba(255,0,0,'
             else

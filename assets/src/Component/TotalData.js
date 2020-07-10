@@ -6,10 +6,7 @@ import Colorpicker from '../Functions/ColorPicker'
 const TotalData = ()=>{
     const result = IndiaResponse()
     var size = 0
-    for(var key in result.tested)
-    {
-
-    }
+   
     var  TotalData= {}
     try{
    

@@ -3,10 +3,13 @@ import {View} from 'react-native'
 import GlobalBase from '../API/GlobalBase'
 export default ()=>{
     const [GlobalResult,SetGlobalResult] = useState([])
+    const [Check,SetCheck] =useState(true)
         const Req = async ()=>{
             const Response= await GlobalBase.get()
             .catch(error=>{
-                console.log(error)
+                console.log(error,"Error in GlobalResponse")
+                SetGlobalResult("Somthing went Wrong..")
+                SetCheck(false)
             })
             SetGlobalResult(Response.data)
             // console.log(Response)
@@ -20,5 +23,5 @@ useEffect(()=>{
     console.log("Global")
     Req()
 },[])
-    return GlobalResult
+    return [GlobalResult,Check]
 }

@@ -1,9 +1,11 @@
-import React from "react";
-import {View,Text,FlatList} from 'react-native'
+import React, { useState } from "react";
+import {View,Text,FlatList,StyleSheet} from 'react-native'
 import TableHeader from '../Component/TableHeader'
 import RowData from '../Component/RowData'
 import useSwr from 'swr'
 import { ScrollView } from "react-native-gesture-handler";
+import Spinner from 'react-native-loading-spinner-overlay'
+import { color } from "react-native-reanimated";
 async function fetcher(url) {
     const res = await fetch(url);
     const json = await res.json();
@@ -11,10 +13,11 @@ async function fetcher(url) {
   }
 const DistrictTableData = ({id})=>{
     // const result = StateResponse()
+    const [SpinnerVisible,SetSpinnerVisible] = useState(false)
     const {data:result} = useSwr("https://api.covid19india.org/state_district_wise.json",fetcher)
     
     if(!result)
-    return (<View><Text>Loading</Text></View>)
+    return (<View><Spinner visible={!SpinnerVisible} textContent="Loading.." textStyle={styles.spinnerTextStyle}/></View>)
     return(
         <ScrollView horizontal={true}>
         <View style={{marginTop:50}}>
@@ -39,5 +42,10 @@ const DistrictTableData = ({id})=>{
         </ScrollView>
     )
 }
+const styles = StyleSheet.create({
+    spinnerTextStyle:{
+        color:'white'
+    }
+})
 
 export default DistrictTableData

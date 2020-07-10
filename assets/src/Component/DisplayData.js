@@ -1,21 +1,26 @@
-import React from 'react'
-import {View,Text,StyleSheet} from 'react-native'
+import React, { Suspense } from 'react'
+import {View,Text,StyleSheet,ScrollView,Dimensions,ActivityIndicator} from 'react-native'
 import NumberChange from '../Functions/NumberChange'
-import RingChart from './RingChart'
+// import RingChart from './RingChart'
 import AreaChartExample from './AreaChart'
 import * as d3 from 'd3'
 import AreaChartSingleCountry from './AreaChartSingleCountry'
 import {withNavigation} from 'react-navigation'
+const RingChart = React.lazy(()=>import('../Component/RingChart'))
+var WidthWindow = Dimensions.get("window").width
+var heightWindow = Dimensions.get("window").height
+var WidthScreen = Dimensions.get("screen").width
+var heightScreen = Dimensions.get("screen").height
 const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,ApiLink,navigation,FetchData})=>{
-    console.log(id,"SingleCountry",DisplayDataFor)
+    console.log(id,"SingleCountryData",DisplayDataFor,"=",FetchData)
     var D3TIME = d3.timeFormat("%Y-%m-%d")
     var dates = new Date()
     var OneDayBefore = new Date(dates.getTime()-(1*24*60*60*1000))
     var CurrentDate = D3TIME(OneDayBefore)+"T00:00:00.000Z"
-    var PastDate = new Date(dates.getTime()-(7*24*60*60*1000))
+    var PastDate = new Date(dates.getTime()-(10*24*60*60*1000))
     var PastSavenDaysDate = D3TIME(PastDate)+"T00:00:00.000Z"
-    console.log(PastSavenDaysDate,"[JAIN]",CurrentDate)
-
+    // console.log(PastSavenDaysDate,"[JAIN]",CurrentDate)
+    console.log(heightWindow,"=",heightScreen,"=","height")
     var date = new Date()
     var month = date.getMonth()
     var AreaChart = null
@@ -36,6 +41,7 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
     }
     else if(DisplayDataFor==='Global')
     {
+        console.log("GlobalSection")
         AreaChart=<AreaChartExample title={title} from={month} 
                 backgroundGradientFrom={"rgb(180,74,42,.5)"}
                 ChartWidth={150}
@@ -67,17 +73,18 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
     }
     // 
     return(
+        
         <View style={Styles.ViewStyle} >
             <View style={Styles.ViewStyleTwo}>            
                 <View >
                     <Text 
                         style={Styles.TextStyleTitle} 
-                        style={{color:color,fontWeight:"bold",marginLeft:3,fontSize:20}}>
+                        style={{color:color,fontWeight:"bold",marginLeft:10,fontSize:15}}>
                             {title}
                     </Text>
                     <Text 
                         style={Styles.TextStyleData} 
-                        style={{color:color,fontSize:30,marginLeft:3}}>
+                        style={{color:color,fontSize:25,marginLeft:10}}>
                             {(NumberChange(Data))}
                     </Text>
                 
@@ -93,11 +100,13 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
                 /> */}
                 {AreaChart}
             </View>
-            <View style={{marginLeft:30,marginTop:3}}>
-                        
+            <View style={{marginLeft:30,marginTop:-15}}>
+                    <Suspense fallback={<View><ActivityIndicator/></View>}>
                         <RingChart Data={Data} title={title} DisplayDataFor={DisplayDataFor} id={id} ApiLink={ApiLink}/>
-                </View>
+                        </Suspense>
+            </View>
         </View>
+        
     )
 }
 const Styles= StyleSheet.create({
@@ -108,13 +117,13 @@ const Styles= StyleSheet.create({
     ViewStyleTwo:{
         
     
-        height:100,
-        width:250,
-        backgroundColor:'white',
-        margin:3,
-        marginTop:13,
-        borderBottomRightRadius:30,
-        borderTopEndRadius:30,
+        height:heightWindow>700?heightWindow/9:heightWindow/11,
+        width:(WidthWindow/2),
+        backgroundColor:'transparent',
+        margin:10,
+        
+        // borderBottomRightRadius:30,
+        // borderTopEndRadius:30,
         flexDirection:"row",
         marginLeft:0
         

@@ -1,14 +1,19 @@
-import React from 'react'
-import {View,Text,Dimensions,StyleSheet, TabBarIOS} from 'react-native'
+import React, { Suspense } from 'react'
+import {View,Text,Dimensions,StyleSheet, TabBarIOS,Button,TouchableOpacity} from 'react-native'
+import {Ionicons} from '@expo/vector-icons'
 import {withNavigation} from 'react-navigation'
 import * as d3 from 'd3'
 import AreaChartExample from '../Component/AreaChart'
 import ColorPicker from '../Functions/ColorPicker'
-import StackChart from '../Component/StackChart'
+// import StackChart from '../Component/StackChart'
+import Spinner from 'react-native-loading-spinner-overlay'
 import { AppLoading } from 'expo'
+import BackButton from '../Component/BackButton'
+const StackChart = React.lazy(()=>import('../Component/StackChart'))
 const height = Dimensions.get("screen").height
 const width = Dimensions.get("window").width
 const DataTableScreen = ({navigation,id})=>{
+    
     var D3TIME = d3.timeFormat("%Y-%m-%d")
     var dates = new Date()
     var OneDayBefore = new Date(dates.getTime()-(1*24*60*60*1000))
@@ -80,6 +85,7 @@ const DataTableScreen = ({navigation,id})=>{
     </View>
     return(
         <View style={Styles.ViewStyle}>
+            <BackButton onPress={()=>navigation.goBack()}/>
             <View>
                 <View style={Styles.ViewStyleColorCircle}>
                         <View style={Styles.ViewStyleRedCircle}></View>
@@ -99,20 +105,23 @@ const DataTableScreen = ({navigation,id})=>{
             
             <View style={{marginTop:50}}>
                 {/* <TableData/> */}
-                
+                <Suspense fallback={<View><Spinner visible={true} textContent="Loading..." textStyle={{color:'white'}}/></View>}>
                 <StackChart ApiLink={ApiLink} id={id} DisplayDataFor={DisplayDataFor}/>
+                </Suspense>
                 <View style={Styles.ViewChartStyle}><Text style={{color:'white',fontWeight:'bold',fontSize:22}}>Top 3 Effected States</Text></View>
             </View>
+            {/* <Button title="back" onPress={()=>navigation.goBack()}/> */}
         </View>
+
     )
 }
 const Styles = StyleSheet.create({
     ViewChartStyle:{
         alignSelf:'center',
-        marginTop:-5
+        marginTop:-10
     },
     ViewStyle:{
-        backgroundColor:'rgb(111,108,170)', //rgb(111,108,170)
+        backgroundColor:'rgb(24,26,31)', //rgb(111,108,170)
         opacity:1,
         height:height,
         

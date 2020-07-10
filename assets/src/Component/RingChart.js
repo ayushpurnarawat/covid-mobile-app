@@ -1,18 +1,22 @@
-import React from 'react'
-import {View,Text,Dimensions} from 'react-native'
+import React, { useState } from 'react'
+import {View,Text,Dimensions,StyleSheet,ActivityIndicator} from 'react-native'
 import { ProgressChart} from 'react-native-chart-kit'
 import useSwr from 'swr'
+import Spinner from 'react-native-loading-spinner-overlay'
 import ColorPicker from '../Functions/ColorPicker';
 async function fetcher(url) {
     const res = await fetch(url);
     const json = await res.json();
     return json;
   }
+  var widthWindow = Dimensions.get("window").width
 const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
-    console.log(ApiLink,"=",DisplayDataFor,"=",id,"[RingChart.js]")
+    // console.log(ApiLink,"=",DisplayDataFor,"=",id,"[RingChart.js]")
+    var [ApiSuccess,SetApiSuccess] = useState(true)
     var per = []
     var showPersentage =null
     const {data:abc} = useSwr(ApiLink,fetcher)
+    
     if(abc)
     {
         if(DisplayDataFor==='India')
@@ -79,6 +83,8 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
         }
         else if(DisplayDataFor==='Global')
         {
+            console.log("Global [RingChart.js]")
+            try{
             var confirmedcases =abc["Global"].TotalConfirmed
             var recoveredcases= abc["Global"].TotalRecovered
             var deathcases = abc["Global"].TotalDeaths
@@ -107,6 +113,10 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
                             {parseFloat(per[0]*100).toFixed(0)+"%"}
                             </Text>)
                 }
+            }
+            catch{
+                
+            }
         }
         else if((DisplayDataFor==='SingleCountry'))
         {
@@ -150,17 +160,19 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
       };
       const screenWidth = Dimensions.get("window").width;
       const chartConfig = {
-        backgroundGradientFrom: "aliceblue",
+        backgroundGradientFrom: "red",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: 'aliceblue',
-        backgroundGradientToOpacity: 0.5,
+        backgroundGradientToOpacity: 0,
         color: (opacity = 1) => ColorPicker(title),
         strokeWidth: 3, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
       };
+      if(!abc)
+      return <View><ActivityIndicator/></View>
     return(
-        <View>
+        <View style={{marginLeft:widthWindow/10}}>
             {showPersentage}
             <ProgressChart
             data={dataset}
@@ -174,6 +186,11 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
             />
         </View>
     )
+    
 }
-
+const styles = StyleSheet.create({
+    spinnerTextStyle:{
+        color:"white"
+    }
+})
 export default RingChart

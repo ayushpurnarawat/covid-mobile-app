@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text} from 'react-native'
+import {View,Text,ActivityIndicator} from 'react-native'
 import {LineChart } from 'react-native-chart-kit'
 import useSwr from 'swr'
 import * as d3 from 'd3'
@@ -35,37 +35,44 @@ const AreaChartSingleCountry=(
         {
             var date = abc[key].Date
             var t =par(date)
+            var mon
+            var dates
             // var time =TimeConv(abc.cases_time_series[key].date+"2020")
+        try{
         var mon=(t.getMonth())
-        var date= (t.getDate())
+        var dates= (t.getDate())
+        }
+        catch{
+          console.log("CatchSingleCountry")
+        }
         if(mon===from-1){
     
         
         if(title==='Confirmed'){
 
         data[count]=abc[key].Confirmed
-        labels[count] = date+1
+        labels[count] = dates+1
         var chartColor = title
          chartColor= ColorPicker(title,chartColor)
         }
         if(title==='Recovered')
         {
             data[count]=abc[key].Recovered
-            labels[count] = date+1
+            labels[count] = dates+1
             var chartColor = title
           chartColor= ColorPicker(title,chartColor)
         }
         if(title==='Active')
         {
             data[count]=abc[key].Active
-            labels[count] = date+1
+            labels[count] = dates+1
             var chartColor = title
           chartColor= ColorPicker(title,chartColor)
         }
         if(title==='Deaths')
         {
             data[count]=abc[key].Deaths
-            labels[count] = date+1
+            labels[count] = dates+1
             var chartColor = title
           chartColor= ColorPicker(title,chartColor)
         }
@@ -93,7 +100,7 @@ const AreaChartSingleCountry=(
           } // optional
       };
         if(!abc)
-        return <View><Text>Hellogjgj</Text></View>
+        return <View><View style={{justifyContent:'center',marginLeft:40}}><ActivityIndicator/></View></View>
         return(
             <View>
                 <View style={{marginTop:0,marginLeft:-10}}>

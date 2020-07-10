@@ -1,6 +1,7 @@
 import React from 'react'
 import {View,Text} from 'react-native'
 import {Svg,G,Line} from 'react-native-svg'
+
 const SVG = ()=>{
     return(
         <View>

@@ -7,25 +7,27 @@ import StateTotalData from '../Component/StateTotalData'
 import SingleCountryTotalData from '../Component/SingleCountryTotalData'
 import ColorPicker from '../Functions/ColorPicker'
 import StatisticsIcon from '../Icons/StatisticsIcon'
+import BackButton from '../Component/BackButton'
 
 const height = Dimensions.get("screen").height
 const SingleCountry = ({navigation})=>{
     // const result = IndiaResponse()
     // console.log(result.cases_time_series[0].dailyconfirmed)
     var id = navigation.getParam("id")
-    const height = Dimensions.get("window").height
+    const height = Dimensions.get("screen").height
     const width = Dimensions.get("window").width
     var date = new Date()
     var month = date.getMonth()
     return(
         
         <ScrollView showsVerticalScrollIndicator={false}>
-      <View >
+      <View style={{height:height,backgroundColor:'rgb(24,26,31)'}}>
+        <BackButton onPress={()=>navigation.goBack()}/>
         <View style={{alignItems:'baseline',flexDirection:'row'}}>
-          <Text style={{color:ColorPicker("Deaths"),marginTop:70,fontWeight:'bold',fontSize:25}}>{id}</Text>  
+          <Text style={{color:'white',marginTop:70,fontWeight:'bold',fontSize:25}}>{id}</Text>  
           <View style={{marginLeft:200}}>
           <StatisticsIcon 
-            color={ColorPicker("deaths")}
+            color={'white'}
             onPress={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})}
           /> 
           </View>
@@ -49,18 +51,12 @@ const SingleCountry = ({navigation})=>{
 }
 const Styles = StyleSheet.create({
     FirstViewStyle:{
-        backgroundColor:"rgb(111,108,170)",         //rgb(94,90,180)
-        height:height/3,
-        borderBottomStartRadius:15,
-        borderBottomEndRadius:15,
+        backgroundColor:"rgb(24,26,31)",         //rgb(94,90,180)
+        
         
     },
     SecondViewStyle:{
-        backgroundColor:'aliceblue',
-        // height:height-(height/3)+25,
-        marginTop:25,
-        borderTopEndRadius:45,
-        borderTopLeftRadius:45
+       
     }
     
 })
