@@ -61,7 +61,7 @@ const GlobalTotalData = ()=>{
             
             renderItem={({item,index})=>{
             return (
-                    <Suspense fallback={<View><Text style={{color:"white",fontSize:27}}>Global loading</Text></View>}>           
+                    <Suspense fallback={<View><Text style={{color:"white",fontSize:27}}></Text></View>}>           
                     <DisplayData 
                     Data={TotalData[item].data} 
                     title={item} 

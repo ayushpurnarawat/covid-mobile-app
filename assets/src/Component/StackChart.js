@@ -109,7 +109,7 @@ const StackChart =({ApiLink,DisplayDataFor,id})=>{
         
     }
     if(!abc)
-    return <View><Text>Loading....</Text></View>
+    return <View><Text></Text></View>
     return(
         <View>
             <StackedBarChart

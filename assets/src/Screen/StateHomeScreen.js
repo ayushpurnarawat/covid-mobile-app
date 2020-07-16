@@ -11,7 +11,7 @@ const height = Dimensions.get("screen").height
 const StateHomeScreen = ({navigation})=>{
     // const result = IndiaResponse()
     // console.log(result.cases_time_series[0].dailyconfirmed)
-    console.log(id,"Ankit")
+    // console.log(id,"Ankit")
     var id = navigation.getParam("id")
     const height = Dimensions.get("screen").height
     const width = Dimensions.get("window").width

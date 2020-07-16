@@ -26,22 +26,22 @@ const GlobalHomeScreen = ({navigation})=>{
     const {data:result,error} = useSwr("https://api.covid19api.com/summary",fetcher)
     if(error)
     {
-        console.log(error,"[GlobalHomeScreen.js]")
+        // console.log(error,"[GlobalHomeScreen.js]")
     }
     
     if(result)
     {
-        console.log(result,"Byeee")
+        // console.log(result,"Byeee")
         if(result["success"]===false)
         {
-            console.log("Jai",result["success"])
+            // console.log("Jai",result["success"])
             return (<View><Spinner visible={true} textContent="LimitOver.... " textStyle={{color:'white'}}/></View>)
 
         }
 
     }
     if(!result)
-    return (<View><Text style={{color:'red'}}>WaitKr</Text></View>)
+    return (<View><Text></Text></View>)
     return(
         
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -61,7 +61,7 @@ const GlobalHomeScreen = ({navigation})=>{
         </View>
         </View>   
         <View style={Styles.SecondViewStyle}>
-        <Suspense fallback={<View><Text style={{color:'white'}}>Loading..</Text></View>}>
+        <Suspense fallback={<View><Text> </Text></View>}>
          <GlobalTotalData DisplayDataFor={"Global"} FetchData={FetchData}/>
          </Suspense>
          <ButtonJs click={()=>navigation.navigate('GlobalScreen')} title={"CountryWise"}/>
@@ -81,7 +81,7 @@ const Styles = StyleSheet.create({
         // height:height/3,
         // borderBottomStartRadius:15,
         // borderBottomEndRadius:15,
-        marginTop:height/15
+        marginTop:height/25
 
         
     },

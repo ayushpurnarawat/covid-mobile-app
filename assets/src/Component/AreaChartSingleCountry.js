@@ -28,6 +28,7 @@ const AreaChartSingleCountry=(
       const {data:abc} = useSwr(`${ApiLink}${id}`,fetcher)
         if(abc)
         {
+          console.log(abc,"SINGLECOUNTRY")
             var data =[]
             var count =0
             var labels =[]
@@ -43,7 +44,7 @@ const AreaChartSingleCountry=(
         var dates= (t.getDate())
         }
         catch{
-          console.log("CatchSingleCountry")
+          // console.log("CatchSingleCountry")
         }
         if(mon===from-1){
     

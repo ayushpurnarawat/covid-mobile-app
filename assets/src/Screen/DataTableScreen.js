@@ -13,7 +13,7 @@ const StackChart = React.lazy(()=>import('../Component/StackChart'))
 const height = Dimensions.get("screen").height
 const width = Dimensions.get("window").width
 const DataTableScreen = ({navigation,id})=>{
-    
+    var stack=null
     var D3TIME = d3.timeFormat("%Y-%m-%d")
     var dates = new Date()
     var OneDayBefore = new Date(dates.getTime()-(1*24*60*60*1000))
@@ -22,7 +22,7 @@ const DataTableScreen = ({navigation,id})=>{
     var PastSavenDaysDate = D3TIME(PastDate)+"T00:00:00.000Z"
     // console.log("PastSavenDate",SavenDays,"Currnet==",CurrentDate)
     var FetchData = navigation.getParam("FetchData")
-    console.log(FetchData,"fatchy")
+    // console.log(FetchData,"fatchy")
     var DisplayDataFor = navigation.getParam("DisplayDataFor")
     var ApiLink = navigation.getParam("ApiLink")
     var id= navigation.getParam("id")
@@ -83,6 +83,16 @@ const DataTableScreen = ({navigation,id})=>{
                 />
             </View>
     </View>
+    if(DisplayDataFor==='India')
+    stack=(
+        <View style={{marginTop:50}}>
+                {/* <TableData/> */}
+                <Suspense fallback={<View><Spinner visible={true} textContent="Loading..." textStyle={{color:'white'}}/></View>}>
+                <StackChart ApiLink={ApiLink} id={id} DisplayDataFor={DisplayDataFor}/>
+                </Suspense>
+                <View style={Styles.ViewChartStyle}><Text style={{color:'white',fontWeight:'bold',fontSize:22}}>Top 3 Effected States</Text></View>
+            </View>
+    )
     return(
         <View style={Styles.ViewStyle}>
             <BackButton onPress={()=>navigation.goBack()}/>
@@ -102,14 +112,8 @@ const DataTableScreen = ({navigation,id})=>{
             </View>
             
             {AreaChartEx}
+            {stack}
             
-            <View style={{marginTop:50}}>
-                {/* <TableData/> */}
-                <Suspense fallback={<View><Spinner visible={true} textContent="Loading..." textStyle={{color:'white'}}/></View>}>
-                <StackChart ApiLink={ApiLink} id={id} DisplayDataFor={DisplayDataFor}/>
-                </Suspense>
-                <View style={Styles.ViewChartStyle}><Text style={{color:'white',fontWeight:'bold',fontSize:22}}>Top 3 Effected States</Text></View>
-            </View>
             {/* <Button title="back" onPress={()=>navigation.goBack()}/> */}
         </View>
 

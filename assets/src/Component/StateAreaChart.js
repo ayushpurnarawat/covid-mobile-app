@@ -104,7 +104,7 @@ const StateAreaChart=({title,from,ChartHeight,ChartWidth,DisplayDataFor,id,ApiLi
     //   },20000)
 
       if(!abc)
-      return <View><Text>Hellogjggjhgjj</Text></View>
+      return <View><Text></Text></View>
       return(
           <View>
               <View style={{marginTop:0,marginLeft:-10}}>

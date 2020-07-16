@@ -10,6 +10,7 @@ import StatisticsIcon from '../Icons/StatisticsIcon'
 import Constant from '../Screen/Constant'
 import StateName from '../Searching/StateName'
 import ColorPicker from '../Functions/ColorPicker'
+import TimeSeries from '../Component/TimeSeries'
 const TotalData = React.lazy(()=>import("../Component/TotalData"))
 const AreaChartExample =  React.lazy(()=>import("../Component/AreaChart"))
 const heightScreen = Dimensions.get("screen").height
@@ -30,7 +31,7 @@ const MainScreen = ({navigation})=>{
         SetSearch(value)
         var reg = new RegExp(Search)
         SetSearchString(StateName(Search))
-        console.log(SearchString,"sfd")
+        // console.log(SearchString,"sfd")
         SetWidthForSearch(true)
         if(value==='')
         {
@@ -40,7 +41,7 @@ const MainScreen = ({navigation})=>{
     return(
         
         // <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{height:heightScreen,backgroundColor:'white'}}>      
+      <View style={{height:heightScreen,backgroundColor:'rgb(24,26,31)'}}>      
         <View style={Styles.FirstViewStyle}>
             <View style={{flexDirection:"row",width:widthWindow,justifyContent:"space-around"}}>
                 <View style={{alignItems:'flex-start'}}>
@@ -94,7 +95,7 @@ const MainScreen = ({navigation})=>{
                     <FlatList 
                     data={SearchString}
                     renderItem={({item})=>{
-                        console.log(item,"qwert")
+                        // console.log(item,"qwert")
                         wi=true
                         return(
                         <Text style={{fontSize:18,color:ColorPicker('Deaths')}}>{item}</Text>
@@ -119,7 +120,8 @@ const MainScreen = ({navigation})=>{
             {/* </ScrollView> */}
             <ButtonJs click={()=>navigation.navigate('IndiaScreen')} title={"StateWise"}/>
             {/* <Button /> */}
-            {/* <Bu/> */}
+            {/* <Bu/>
+            <TimeSeries title={"Confirmed"}/> */}
         </View>
         // </ScrollView>
     )

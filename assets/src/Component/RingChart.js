@@ -83,7 +83,7 @@ const RingChart = ({Data,title,DisplayDataFor,id,ApiLink})=>{
         }
         else if(DisplayDataFor==='Global')
         {
-            console.log("Global [RingChart.js]")
+            // console.log("Global [RingChart.js]")
             try{
             var confirmedcases =abc["Global"].TotalConfirmed
             var recoveredcases= abc["Global"].TotalRecovered

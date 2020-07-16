@@ -11,7 +11,7 @@ const StateScreen = ({navigation,id})=>{
         <View style={{backgroundColor:'rgb(24,26,31)'}}>
                   <BackButton onPress={()=>navigation.goBack()}/>
         <Suspense fallback={<View><Spinner visible={true} textContent="Loading..." textStyle={{color:'white'}}/></View>}>
-            <TableData/>
+            <TableData DisplayDataFor="India"/>
             </Suspense>
         </View>
     )

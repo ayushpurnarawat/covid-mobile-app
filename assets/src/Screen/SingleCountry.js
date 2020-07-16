@@ -20,7 +20,7 @@ const SingleCountry = ({navigation})=>{
     var month = date.getMonth()
     return(
         
-        <ScrollView showsVerticalScrollIndicator={false}>
+        // <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{height:height,backgroundColor:'rgb(24,26,31)'}}>
         <BackButton onPress={()=>navigation.goBack()}/>
         <View style={{alignItems:'baseline',flexDirection:'row'}}>
@@ -36,17 +36,17 @@ const SingleCountry = ({navigation})=>{
         <SingleCountryTotalData id={id}/>
 
         </View>
-        <View style={Styles.SecondViewStyle}>
+        {/* <View style={Styles.SecondViewStyle}> */}
         
          {/* <ButtonJs click={()=>navigation.navigate('DataTable',{ApiLink:"https://api.covid19india.org/state_district_wise.json",id:id,FetchData:true})} title={"Statistics"}/> */}
          {/* <ButtonJs click={()=>navigation.navigate('State',{id:id})} title={"DistrictWise"}/> */}
             
-        </View> 
+        {/* </View>  */}
             
             
             <RingChart/>
         </View>
-        </ScrollView>
+        // </ScrollView>
     )
 }
 const Styles = StyleSheet.create({

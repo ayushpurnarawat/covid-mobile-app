@@ -52,7 +52,7 @@ const GlobalTableData = ({navigation})=>{
             data={Object.keys(result["Countries"])}
             renderItem={({item})=>{
                 return (
-                 <TouchableOpacity onPress={()=>navigation.navigate("SingleCountry",{id:result["Countries"][item].Country})}> 
+                //  <TouchableOpacity onPress={()=>navigation.navigate("SingleCountry",{id:result["Countries"][item].Country})}> 
                 <RowData 
                     StateName={result["Countries"][item].Country} 
                     ConfirmedCases={result["Countries"][item].TotalConfirmed}
@@ -60,7 +60,7 @@ const GlobalTableData = ({navigation})=>{
                     RecoverCases={result["Countries"][item].TotalRecovered}
                     DeathCases={result["Countries"][item].TotalDeaths}    
                 />
-                </TouchableOpacity>
+                // </TouchableOpacity>
                 )
                 
             }}

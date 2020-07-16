@@ -5,7 +5,7 @@ import DisplayData from './DisplayData'
 import Colorpicker from '../Functions/ColorPicker'
 const SingleCountryTotalData = ({id})=>{
     const result = GlobalResponse()
-    
+    console.log(id,"singleCOun...",result,"::::")
     var TotalData = {}
     for(var key in result["Countries"])
     {
@@ -30,8 +30,9 @@ const SingleCountryTotalData = ({id})=>{
             
             <FlatList
             data={Object.keys(TotalData)}
-            
-            renderItem={({item,index})=>{
+            keyExtractor={(item)=>item.key}
+            renderItem={({item})=>{
+                // console.log(id)
             return (
                                  
                     <DisplayData 
@@ -47,9 +48,9 @@ const SingleCountryTotalData = ({id})=>{
 
                 )
             }}
-            showsVerticalScrollIndicator={false}
+            // showsVerticalScrollIndicator={false}
             
-            style={{display:"flex"}}
+            // style={{display:"flex"}}
             
             />
         </View>

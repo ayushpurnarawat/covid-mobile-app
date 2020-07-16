@@ -5,7 +5,7 @@ import IndiaResponse from '../API/IndiaResponse'
 import TableHeader from '../Component/TableHeader'
 import {withNavigation} from 'react-navigation'
 import RowData from './RowData'
-const TableData =({navigation})=>{
+const TableData =({navigation,DisplayDataFor})=>{
     const result = IndiaResponse()
     
     return(
@@ -25,7 +25,9 @@ const TableData =({navigation})=>{
                         ConfirmedCases={item.confirmed}
                         ActiveCases={item.active}
                         RecoverCases={item.recovered}
-                        DeathCases={item.deaths}    
+                        DeathCases={item.deaths}  
+                        id={item.state}  
+                        DisplayDataFor={DisplayDataFor}
                     />
                     </TouchableOpacity>
                     )

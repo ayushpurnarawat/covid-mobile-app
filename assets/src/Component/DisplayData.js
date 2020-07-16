@@ -4,6 +4,7 @@ import NumberChange from '../Functions/NumberChange'
 // import RingChart from './RingChart'
 import AreaChartExample from './AreaChart'
 import * as d3 from 'd3'
+import TimeSeries from '../Component/TimeSeries'
 import AreaChartSingleCountry from './AreaChartSingleCountry'
 import {withNavigation} from 'react-navigation'
 const RingChart = React.lazy(()=>import('../Component/RingChart'))
@@ -12,7 +13,7 @@ var heightWindow = Dimensions.get("window").height
 var WidthScreen = Dimensions.get("screen").width
 var heightScreen = Dimensions.get("screen").height
 const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,ApiLink,navigation,FetchData})=>{
-    console.log(id,"SingleCountryData",DisplayDataFor,"=",FetchData)
+    // console.log(id,"SingleCountryData",DisplayDataFor,"=",FetchData)
     var D3TIME = d3.timeFormat("%Y-%m-%d")
     var dates = new Date()
     var OneDayBefore = new Date(dates.getTime()-(1*24*60*60*1000))
@@ -20,10 +21,11 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
     var PastDate = new Date(dates.getTime()-(10*24*60*60*1000))
     var PastSavenDaysDate = D3TIME(PastDate)+"T00:00:00.000Z"
     // console.log(PastSavenDaysDate,"[JAIN]",CurrentDate)
-    console.log(heightWindow,"=",heightScreen,"=","height")
+    // console.log(heightWindow,"=",heightScreen,"=","height")
     var date = new Date()
     var month = date.getMonth()
     var AreaChart = null
+    var TimeS =null
     if(DisplayDataFor==='India')
     {
         AreaChart=<AreaChartExample title={title} from={month} 
@@ -38,10 +40,16 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
                 PastSavenDaysDate={PastSavenDaysDate}
                 FetchData={FetchData}
                 />
+        
+    }
+    if(DisplayDataFor==='India')
+    {
+        TimeS=<TimeSeries title={title}/>
+                console.log("dia",title)
     }
     else if(DisplayDataFor==='Global')
     {
-        console.log("GlobalSection")
+        // console.log("GlobalSection")
         AreaChart=<AreaChartExample title={title} from={month} 
                 backgroundGradientFrom={"rgb(180,74,42,.5)"}
                 ChartWidth={150}
@@ -57,6 +65,7 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
     }
     else if(DisplayDataFor==='SingleCountry')
     {
+        console.log("Ankit")
         AreaChart=<AreaChartSingleCountry title={title} from={month} 
                 backgroundGradientFrom={"rgb(180,74,42,.5)"}
                 ChartWidth={150}
@@ -87,17 +96,12 @@ const DisplayData = ({Data,title,color,stateName,DisplayDataFor,id,StateCode,Api
                         style={{color:color,fontSize:25,marginLeft:10}}>
                             {(NumberChange(Data))}
                     </Text>
-                
+                    {/* <Text style={Styles.TextStyleData}>{TimeS}</Text> */}
+                    <View>
+                        {TimeS}
+                    </View>
                 </View>
-                {/* <AreaChartExample title={title} from={month} 
-                backgroundGradientFrom={"rgb(180,74,42,.5)"}
-                ChartWidth={150}
-                ChartHeight={80}
-                DisplayDataFor={DisplayDataFor}
-                id={id}
-                StateCode={StateCode}
-                ApiLink={ApiLink}
-                /> */}
+                
                 {AreaChart}
             </View>
             <View style={{marginLeft:30,marginTop:-15}}>
